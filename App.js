@@ -1,42 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Alert, StyleSheet, Text, View } from 'react-native';
-import { Header } from 'react-native-elements';
-import SearchBar from 'react-native-elements/dist/searchbar/SearchBar-ios';
+import styles from './assets/styles'
+import DetailsPage from './components/detailsPage';
+import Listpage from './components/resultsPage';
 import SearchPage from './components/searchPage';
+import {NavigationContainer} from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HeaderForApp from './components/header';
 
-export default function App() {
+
+
+const Stack = createNativeStackNavigator();
+function App() {
+  
   return (
-    <View style={styles.hea}>
-      <Header
+    <NavigationContainer>
+      
+      
+      <HeaderForApp/>
+      
+      <Stack.Navigator initialRouteName='Home'>
+      
+            <Stack.Screen name="Home" component={SearchPage} options={{title:'Pokemon Search'}}/>
+            <Stack.Screen name="Details" component={DetailsPage} options={{title:'Pokemon Details'}}/>
+            <Stack.Screen name="Listpage" component={Listpage} options={{title:'Search Result'}} />
           
-          placement="left"
-          centerComponent={{ text: '𝙋𝙤𝙠𝙚𝙙𝙚𝙭', style: styles.heading }}
-          rightComponent={{ icon: 'home', color: '#fff' }}
-        />
-      <SearchPage/>
-      <StatusBar style="auto" />
-    </View>
+        </Stack.Navigator>    
+      </NavigationContainer>
+    
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },heading: {
-    
-    color: 'white',
-    fontSize: 22,
-    fontWeight: 'bold',
-  },headerContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#397af8',
-    marginBottom: 20,
-    width: '100%',
-    paddingVertical: 15,
-  },
-});
+export default App;
+
