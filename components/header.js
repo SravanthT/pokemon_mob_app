@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { Alert } from 'react-native';
 import styles from '../assets/styles';
 
 function HeaderForApp(){
@@ -14,6 +14,7 @@ function HeaderForApp(){
         <Header    
           placement="left"
           centerComponent={{ text: '𝙋𝙤𝙠𝙚𝙙𝙚𝙭', style: styles.heading, onPress: ()=>homeHandler() }}
+
           rightComponent={{ icon: 'home', color: '#fff', onPress: ()=>homeHandler()}}
 
         />
