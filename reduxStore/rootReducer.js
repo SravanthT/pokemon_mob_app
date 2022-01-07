@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { loadingReducer } from "./loading";
 import  searchReducer  from "./search/searchReducer";
-import { getSearchReducer } from "./searchResponse/getSearchReducer";
+import getSearchReducer from "./searchResponse/getSearchReducer";
 
 const rootReducer = combineReducers({
     loading : loadingReducer,

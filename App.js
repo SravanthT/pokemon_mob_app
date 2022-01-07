@@ -18,22 +18,19 @@ function App() {
   
   return (
     <Provider store={store}>
-    <NavigationContainer>
-      
-      
+    <NavigationContainer>      
       <HeaderForApp/>
-      <LoadingComp />
       <Stack.Navigator initialRouteName='Home'>
       
             <Stack.Screen name="Home" component={SearchPage} options={{title:'Pokemon Search'}}/>
             <Stack.Screen name="Details" component={DetailsPage} options={{title:'Pokemon Details'}}/>
             <Stack.Screen name="Listpage" component={Listpage} options={{title:'Search Result'}} />
           
-        </Stack.Navigator>    
+        </Stack.Navigator> 
+        <LoadingComp />   
       </NavigationContainer>
       </Provider>
   );
 }
 
 export default App;
-

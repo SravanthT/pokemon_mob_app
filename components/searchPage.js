@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text ,Image,Button,Alert,StyleSheet } from 'react-native';
 import { SearchBar} from 'react-native-elements';
 import styles from '../assets/styles';
@@ -6,20 +6,32 @@ import { connect } from 'react-redux';
 import { updateInputChange } from '../reduxStore/search/searchActions';
 import { useNavigation } from '@react-navigation/native';
 import {setLoading} from '../reduxStore/loading';
+import axios from 'axios';
+import getSearchResponse from '../reduxStore/searchResponse/getSearchActions';
 
+const api = axios.create({
+    baseURL:`https://pokeapi.co/api/v2/pokemon/`
+})
 function SearchPage(props){
     const navigation = useNavigation();
 
-const buttonHandler = (e)=>{
-    navigation.navigate("Listpage",{name:'Listpage'})
+    
+const buttonHandler = ()=>{
     props.setLoading()
-    setTimeout(() => {
+    axios.get("https://pokeapi.co/api/v2/pokemon?offset=20&limit=10")
+    .then(response=> {console.log(response.data)
+        props.getSearchResponse(response.data.results)
+        navigation.navigate("Listpage",{name:"Listpage"})
         props.setLoading()
-    }, 5000)
-    
+    })
+    .catch(err => {
+        console.log(err)
+        alert(err.message)
+        props.setLoading()
+        })
 }
-    
-    return(
+ 
+    return(<>
         <View style={styles.container ,styles.container.backgroundColor="#fffb"}>
             <SearchBar
                     placeholder="Type Here..."
@@ -33,25 +45,28 @@ const buttonHandler = (e)=>{
                     title="Search Pokemon"
                     onPress={()=>buttonHandler()}
             />
-
+        
             <Text>This is search Page {'Loading is '+ props.isLoading}</Text>
             <Text>You Have searched for "{props.searchValue} "</Text>
         </View>
+        </>
     )
 }
 
 function mapStateToProps(state){
-    console.log("Searching for",state);
+    console.log(state)
     return({
         searchValue : state.searching.searchValue,
-        isLoading : state.loading.isLoading
+        isLoading : state.loading.isLoading,
+        searchResponse : state.getData.searchResponse
     })
 }
 
 function mapDispatchToProps(dispatch){
     return({
         updateInputChange: (w)=>dispatch(updateInputChange(w)),
-        setLoading: ()=> dispatch(setLoading())
+        setLoading: ()=> dispatch(setLoading()),
+        getSearchResponse : (r)=>dispatch(getSearchResponse(r))
     })
 }
 

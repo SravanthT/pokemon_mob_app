@@ -5,4 +5,4 @@ import { setLoading } from "./loading";
 const actionCreators = {
     getSearchResponse,updateInputChange,setLoading}
 
-export {actionCreators}
+export default actionCreators;

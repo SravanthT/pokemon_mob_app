@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 function LoadingComp(props){
     const loading = props.isLoading
     return(
-       <View>
-           {loading ? <View style = {[styles.container, styles.horizontal]}><ActivityIndicator size="large" color="#0000ff" /></View> : null }
+       <View style={loading && [styles.container, styles.horizontal]}>
+           {loading ? <View ><ActivityIndicator size="large" color="#0000ff" /></View> : null }
 
        </View>
     )
@@ -26,14 +26,18 @@ function mapStateToProps(state){
 
   const styles = StyleSheet.create({
     container: {
+        position:"absolute",
         zIndex:99,
-      position:"relative",
-      height:750,
-      justifyContent: "center"
+        left:0,
+        right:0,
+        top:0,
+        bottom:0,
+        backgroundColor:"#fff",
+        opacity:0.95,
+        alignItems:"center",
+        justifyContent: "center"
     },
     horizontal: {
-      flexDirection: "row",
-      justifyContent: "space-around",
       padding: 10
     }
   });

@@ -2,19 +2,17 @@ import { SEARCH_RESPONSE } from "../actionTypes";
 import axios from 'axios';
 
 const initialSearchState ={
-    word:'',
-    searchResponse : []
+    searchResponse : {data:""}
 }
 
 
 
-function getSearchReducer(state=initialSearchState,action){
-    console.log("getSearchReducer initiated")
+const getSearchReducer=(state=initialSearchState,action)=>{
+    console.log("getSearchReducer initiated",[action.payload])
     switch(action.type){
         case SEARCH_RESPONSE:
             return{
-                ...state,
-                word : action.payload,
+                
                 searchResponse : action.payload
             }
         default : 
@@ -22,4 +20,4 @@ function getSearchReducer(state=initialSearchState,action){
     }
 }
 
-export {getSearchReducer}
+export default getSearchReducer;
