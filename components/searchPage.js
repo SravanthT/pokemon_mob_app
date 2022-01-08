@@ -19,7 +19,7 @@ function SearchPage(props){
 const buttonHandler = ()=>{
     props.setLoading()
     axios.get("https://pokeapi.co/api/v2/pokemon?offset=20&limit=10")
-    .then(response=> {console.log(response.data)
+    .then(response=> {
         props.getSearchResponse(response.data.results)
         navigation.navigate("Listpage",{name:"Listpage"})
         props.setLoading()

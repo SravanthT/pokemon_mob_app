@@ -24,16 +24,17 @@ const styles = StyleSheet.create({
     },
     gridView:{
       flex:1,
-      backgroundColor:"pink",
       margin:5,
       width:175,
       height:200,
       justifyContent:"center",
-      borderTopLeftRadius:40,
-      borderBottomRightRadius:40,
-      shadowOffset: {width:5,height:5},
+      borderTopLeftRadius:30,
+      borderBottomRightRadius:15,
       shadowOpacity:0.2,
-      shadowColor:"#171717",shadowRadius:5
+      shadowColor:"#171717",
+      shadowRadius:5,
+      zIndex:-1,
+      marginHorizontal:8
     },
     pokeHeading:{
       fontFamily: "sans-serif-medium",
@@ -41,15 +42,44 @@ const styles = StyleSheet.create({
       paddingTop:5,
       fontSize: 17,
       textDecorationStyle:"dotted",
-      textAlign:"center"  
+      textAlign:"center",
+      marginHorizontal:5,
+      padding:3,
+      backgroundColor:"#fff" ,
+      borderRadius:5, 
+      zIndex:0,
     },
     svgStyles:{
-      padding:10,
+      zIndex:2,
+      padding:5,
       backgroundColor: "red",
-    },listpage:{
-      flex:1,
-      flexBasis:"1/2",
-      flexWrap:"wrap",
+      elevation:10,
+      height:200,
+    },shadow:{
+      shadowOffset:{width:0,height:2},
+      shadowColor:"#000",
+      shadowOpacity:0.8,
+      shadowRadius:2,
+      elevation:3
+
+    },listPageView:{
+      marginHorizontal: "auto" ,
+      justifyContent:"space-between"
+    },flatView:{
+      marginHorizontal:"auto",
+      alignContent:"center"
+    },bookmark:{
+      flex:1/6,
+      borderColor:"blue",
+      borderWidth:1,
+      position:"absolute",
+      height:40,
+      width:40,
+      backgroundColor:"#fff",
+      zIndex:99,
+      top:5,
+      right:-10,
+
     }
   });
 
