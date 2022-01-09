@@ -8,6 +8,8 @@ import { useNavigation } from '@react-navigation/native';
 import {setLoading} from '../reduxStore/loading';
 import axios from 'axios';
 import getSearchResponse from '../reduxStore/searchResponse/getSearchActions';
+import { updatePokemonDetails } from '../reduxStore/details/detailActions';
+
 
 const api = axios.create({
     baseURL:`https://pokeapi.co/api/v2/pokemon/`
@@ -23,6 +25,7 @@ const buttonHandler = ()=>{
         props.getSearchResponse(response.data.results)
         navigation.navigate("Listpage",{name:"Listpage"})
         props.setLoading()
+        updatePokemonDetails(1)
     })
     .catch(err => {
         console.log(err)
@@ -58,7 +61,8 @@ function mapStateToProps(state){
     return({
         searchValue : state.searching.searchValue,
         isLoading : state.loading.isLoading,
-        searchResponse : state.getData.searchResponse
+        searchResponse : state.getData.searchResponse,
+        pokemon_Details : state.detail.pokemon_Details
     })
 }
 
@@ -66,7 +70,9 @@ function mapDispatchToProps(dispatch){
     return({
         updateInputChange: (w)=>dispatch(updateInputChange(w)),
         setLoading: ()=> dispatch(setLoading()),
-        getSearchResponse : (r)=>dispatch(getSearchResponse(r))
+        getSearchResponse : (r)=>dispatch(getSearchResponse(r)),
+        updatePokemonDetails : (n)=>dispatch(updatePokemonDetails(n))
+
     })
 }
 

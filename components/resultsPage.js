@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React ,{useEffect, useState} from 'react';
-import { Text, View, StyleSheet, ScrollView,SafeAreaView,FlatList } from 'react-native';
+import { Text, View, StyleSheet, ScrollView,SafeAreaView,FlatList,TouchableHighlight } from 'react-native';
 import styles from '../assets/styles';
 import getSearchResponse from '../reduxStore/searchResponse/getSearchActions';
 import { connect } from 'react-redux';
@@ -8,6 +8,8 @@ import SvgUri from 'expo-svg-uri';
 import { Button } from 'react-native-elements';
 import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
+import { setLoading } from '../reduxStore/loading';
+import { updatePokemonDetails } from '../reduxStore/details/detailActions';
 
 
 
@@ -29,10 +31,15 @@ function Listpage(props){
     },[])
     
 
-    const buttonHandler = ()=>{
-        console.log(props.searchValue)
-        getSearchResponse(Data.next)
-        navigation.navigate("Details",{name:'Details'})
+    function pokemonDetailHandler(pokiID){
+        props.setLoading()
+        axios.get(pokiID).then(response =>{
+            updatePokemonDetails(response.data)
+            navigation.navigate("Details",{name:"Details"})
+            props.setLoading()
+        }).catch(err=> {
+            props.setLoading()
+            console.log(err)})
     }
     
     const pokemonComp = ({item})=>{
@@ -44,22 +51,28 @@ function Listpage(props){
             colors={[
               'transparent',
               'transparent',
-            //   'rgba(0,0,0,0.2)',
-            //   'rgba(0,0,0,0.6)'
             ]}
             start={[0,0.9]}
             end={[0,1]}
             style={styles.shadows}
           >
+              <TouchableHighlight 
+              underlayColor={"rgba(0,0,0,0)"}
+              style={styles.touchable} 
+              onPress={ ()=>pokemonDetailHandler(item.url)} >
             <View style={[styles.gridView, styles.shadow]}><LinearGradient colors={[ "#e7e0e4", "#e2d2e0", "#d8c5df", "#c8bae1", "#b1b1e4", "#9fb5ed", "#87baf4", "#69bff8", "#52cffe", "#41dfff", "#46eefa", "#5ffbf1"]}
+            
         style={[styles.background, styles.gridView]}>
             <SvgUri styles={styles.svgStyles}
                                 width="150"
                                 height="150"
                                 source ={{uri:pokeImageUrl}}/>
             <Text key={pokeNum} style={[styles.pokeHeading,styles.shadow]}>{item.name.toUpperCase()}</Text></LinearGradient>
-            <View style={styles.bookmark}></View>
+            <TouchableHighlight style={styles.bookmark}>
+            <View ></View>
+            </TouchableHighlight>
             </View>
+            </TouchableHighlight>
             </LinearGradient>
             
         )
@@ -71,41 +84,27 @@ function Listpage(props){
                 style={styles.flatView}
                 onScroll={""}
                 numColumns={2}
-                data={prevData.concat(Data.concat(latestData))}
+                data={Data}
                 renderItem={pokemonComp}
                 keyExtractor={(ele)=> parseInt(ele.url.substr(34))}/>
 
         </SafeAreaView>
-
-        // <View style={styles.listPage}>
-            
-
-        //     {/* <ScrollView>
-        //         { Data.map((ele,i)=>{
-        //             const pokeNum = parseInt(ele.url.substr(34))
-        //             var path = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokeNum}.svg`
-        //             console.log(pokeNum,ele.url)
-        //             return <View key={i+"v"} style={styles.gridView}>
-        //                         <SvgUri styles={styles.svgStyles}
-        //                         width="150"
-        //                         height="150"
-        //                         source ={{uri:path}}/>
-        //             <Text key={pokeNum} style={styles.pokeHeading}>{ele.name.toUpperCase()}</Text></View>})}                
-        //     </ScrollView> */}
-        // </View>
     )
 }
 
 function mapStateToProps(state){
     return{
         searchValue : state.searching.searchValue,
-        searchResponse : state.getData.searchResponse       
+        searchResponse : state.getData.searchResponse,
+        pokemon_Details : state.detail.pokemon_Details
     }
 }
 
 function mapDispatchToProps(dispatch){
     return{
-        getSearchResponse : (w)=>dispatch(getSearchResponse(w))
+        setLoading: ()=>dispatch(setLoading()),
+        getSearchResponse : (w)=>dispatch(getSearchResponse(w)),
+        updatePokemonDetails : (url)=>dispatch(updatePokemonDetails(url))
     }
 }
 

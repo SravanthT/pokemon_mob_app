@@ -77,10 +77,12 @@ const styles = StyleSheet.create({
       width:40,
       backgroundColor:"#fff",
       zIndex:99,
-      top:5,
-      right:-10,
+      top:-2,
+      right:-12,
 
-    }
+    },touchable:{
+      backgroundColor:"transparent"
+    },
   });
 
   export default styles;
