@@ -2,7 +2,7 @@ import axios from "axios";
 import { POKEMON_DETAILS } from "../actionTypes";
 
 const initialPokeDetails = {
-    pokemon_Details:""
+    pokemonDetails:""
     
 }
 
@@ -11,11 +11,10 @@ const detailReducer = (state= initialPokeDetails,action)=>{
         case POKEMON_DETAILS:
             
                 return {
-                    pokemon_Details : action.payload
+                    pokemonDetails : action.payload
                 }
-                
         default :
-            return state;
+            return state
     }
 }
 

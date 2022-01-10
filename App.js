@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import store from "./reduxStore/index";
 import { setLoading } from './reduxStore/loading';
 import LoadingComp from './components/loadingPage'
+import BookmarkPage from './components/bookmarks';
 
 
 
@@ -25,6 +26,7 @@ function App() {
             <Stack.Screen name="Home" component={SearchPage} options={{title:'Pokemon Search'}}/>
             <Stack.Screen name="Details" component={DetailsPage} options={{title:'Pokemon Details'}}/>
             <Stack.Screen name="Listpage" component={Listpage} options={{title:'Search Result'}} />
+            <Stack.Screen name="BookmarksPage" component={BookmarkPage} />
           
         </Stack.Navigator> 
         <LoadingComp />   
